@@ -48,7 +48,7 @@ class Enemy {
 
 
   void fall() {
-    vel.y *=-2;
+    move(gravForce);
   }
 
   void drawMe() {

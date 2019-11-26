@@ -1,5 +1,6 @@
+
 public Character player;
-Enemy en;
+public Enemy en;
 public timeController timeControl;
 
 public boolean isReverse = false;
@@ -10,23 +11,27 @@ ArrayList<Block> blocks2 = new ArrayList<Block>();
 ArrayList<Enemy> enemys = new ArrayList<Enemy>();
 
 float speed = 1.8;
+float grav = 2;
+float ngrav = 2;
+
 
 PVector upForce = new PVector(0, -speed * 24);
 PVector leftForce = new PVector(-speed, 0);
 PVector rightForce = new PVector(speed, 0);
+PVector gravForce = new PVector(0, grav);
+PVector ngravForce = new PVector(0, ngrav);
 
 boolean up, left, right, reset, levelreset;
 
-float grav = 2;
-float ngrav = 2;
-PVector gravForce = new PVector(0, grav);
-PVector ngravForce = new PVector(0, ngrav);
 
 int repeatX=2;
 int gameState = 0;
 int countEnemy = 12;
+int state = 0;
 
 PImage EnemyImage;
+PImage[] standing = new PImage[2];
+PImage [] walking = new PImage[4];
 
 void keyPressed() {
   if (keyPressed) {
@@ -53,9 +58,8 @@ void setup() {
   strokeWeight(2);
   fill(63);
 
-  PImage avtImg = loadImage("Running-mario.gif");
   //player = new Character(new PVector(width/4, height/4));
-  player = new Character(new PVector(20, height-16), avtImg);
+  player = new Character(new PVector(20, height-16));
   player.jumping = true;
 
   EnemyImage = loadImage("character.png");
@@ -133,34 +137,34 @@ void gameplay() {
 
 
   // enemy interaction
-//if enemy on block is not null, then if enemy is not on block, then they are jumping
+  //if enemy on block is not null, then if enemy is not on block, then they are jumping
   if (en.block != null) {
     if (!en.block.eisOn(en)) {
       en.jumping = true;
     }
   }    
   // enemy move with gravity force, if enemy y velosity is greater than 0, for 
-     en.move(gravForce);
-    if (en.vel.y > 0) {
-      for (int i = 0; i < blocks.size(); i++) {
-        Block b = blocks.get(i);
-        if (b.ebump(en)) {
-          if (en.vel.y > 0) {
-            en.elandOn(b);
-          }
+  en.move(gravForce);
+  if (en.vel.y > 0) {
+    for (int i = 0; i < blocks.size(); i++) {
+      Block b = blocks.get(i);
+      if (b.ebump(en)) {
+        if (en.vel.y > 0) {
+          en.elandOn(b);
         }
       }
-    }   
-// for each enemy in the array update the draw me and apply the fall function to them
+    }
+  }   
+  // for each enemy in the array update the draw me and apply the fall function to them
   for (int i=0; i<enemys.size(); i++) {
     Enemy en = enemys.get(i);
     //enemies move up?
     //enemies dissapear
-    println(en.pos.y);
+    //println(en.pos.y);
     en.update();
     en.fall();
   }
-  }
+}
 
 ////////////////////////////////////// VOID GAME PLAY LEVEL 2 ////////////////////////////////////////////////////////////////////////
 void gameplay2() {
