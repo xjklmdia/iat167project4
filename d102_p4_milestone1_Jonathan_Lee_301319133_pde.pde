@@ -1,3 +1,7 @@
+import controlP5.*;
+
+ControlP5 controlp5;
+
 
 public Character player;
 public Enemy en;
@@ -26,6 +30,7 @@ boolean up, left, right, reset, levelreset;
 
 int repeatX=2;
 int gameState = 0;
+  Button play;
 int countEnemy = 12;
 int state = 0;
 
@@ -57,7 +62,8 @@ void setup() {
   stroke(200);
   strokeWeight(2);
   fill(63);
-
+  
+  
   //player = new Character(new PVector(width/4, height/4));
   player = new Character(new PVector(20, height-16));
   player.jumping = true;
@@ -68,11 +74,18 @@ void setup() {
     en = new Enemy (EnemyImage, new PVector(20, height), new PVector(2, 3));
     respawnEnemy();
   }
-
-
+  //instantiate time controller
   timeControl = new timeController(new PVector());
+  
+  //instantiate level controller
   levelone();
   leveltwo();
+
+//instantiate replay button
+  controlp5 = new ControlP5(this);
+ play = controlp5.addButton("Start Game",0,width/2-60,height-200,150,50);
+ play.setColorLabel(color(0));
+ play.setColorBackground(color(0,250,250));
 }
 
 void draw() {
@@ -93,6 +106,7 @@ void draw() {
 }
 ////////////////////////////////////// VOID GAME PLAY LEVEL 1 ////////////////////////////////////////////////////////////////////////
 void gameplay() {
+  controlp5.getController("Start Game").hide();
   background(255);
   //layer.detectFloor();
 
@@ -242,6 +256,7 @@ void respawnEnemy() {
 }
 
 void GameOver(String str) {
+  controlp5.getController("Start Game").show();
   background(255, 0, 0);
   fill(255);
   text(str, width/2-120, height/2);
@@ -284,5 +299,11 @@ void levelreset() {
   if (key == 'y' ||key == 'Y') {
     player.pos.x=20;
     timeControl.playPositions.clear();
+  }
+}
+
+void controlEvent(ControlEvent theEvent){
+if(theEvent.getController().getName() == "Start Game"){
+  gameState =0;
   }
 }
