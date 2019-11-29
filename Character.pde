@@ -15,7 +15,7 @@ class Character {
   Block block = null;
 
   //healthbaru
-  float maxHealth=100;
+  float maxHealth=10;
   float health = maxHealth;
   float healthPercentage =10;
 
@@ -33,7 +33,7 @@ class Character {
       
       walking[i] = tile;
     }
-    standing[0] = walking[1];
+    standing[0] = walking[0];
     
     vel = new PVector(); //must create instance
     dim = new PVector(32, 48);    
@@ -123,8 +123,9 @@ class Character {
 
   void hit() {
     health --;
+    println("dying a horrible death");
     if (health == 0) { 
-      gameState =3;
+      gameState =2;
     }
   }
 

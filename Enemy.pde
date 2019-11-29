@@ -50,6 +50,14 @@ class Enemy {
   void fall() {
     move(gravForce);
   }
+  
+  boolean collision(Character c){
+  if(dist(pos.x,pos.y,c.pos.x,c.pos.y)<img.width/2+img.width/2){
+    return true;
+}
+  return false;
+  }
+  
 
   void drawMe() {
     pushMatrix();

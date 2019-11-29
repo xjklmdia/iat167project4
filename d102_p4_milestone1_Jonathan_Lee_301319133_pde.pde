@@ -30,7 +30,7 @@ int countEnemy = 12;
 int state = 0;
 
 PImage EnemyImage;
-PImage[] standing = new PImage[2];
+PImage [] standing = new PImage[2];
 PImage [] walking = new PImage[4];
 
 void keyPressed() {
@@ -61,7 +61,8 @@ void setup() {
   //player = new Character(new PVector(width/4, height/4));
   player = new Character(new PVector(20, height-16));
   player.jumping = true;
-
+  
+  //instantiate the enemy array
   EnemyImage = loadImage("character.png");
   for (int i=0; i < countEnemy; i++) {
     en = new Enemy (EnemyImage, new PVector(20, height), new PVector(2, 3));
@@ -103,7 +104,7 @@ void gameplay() {
 
   timeControl.FixedUpdate();
   timeControl.update();  
-  player.update();
+
 
   // check for collision with block and player
   if (player.block != null) {
@@ -133,6 +134,7 @@ void gameplay() {
   for (int i = 0; i < blocks.size(); i++)
     //blocks.get(i).drawMe();
     blocks.get(i).drawMe(player);
+  player.update();
   player.drawMe();
 
 
@@ -144,6 +146,7 @@ void gameplay() {
     }
   }    
   // enemy move with gravity force, if enemy y velosity is greater than 0, for 
+  if(en.jumping){
   en.move(gravForce);
   if (en.vel.y > 0) {
     for (int i = 0; i < blocks.size(); i++) {
@@ -151,6 +154,9 @@ void gameplay() {
       if (b.ebump(en)) {
         if (en.vel.y > 0) {
           en.elandOn(b);
+        } else {
+        en.fall();
+          }
         }
       }
     }
@@ -161,8 +167,13 @@ void gameplay() {
     //enemies move up?
     //enemies dissapear
     //println(en.pos.y);
-    en.update();
     en.fall();
+    en.update();
+    if (en.collision(player)) {
+      player.hit();
+      enemys.remove(en);
+      if (enemys.size()<12)respawnEnemy();
+    }
   }
 }
 
@@ -219,7 +230,6 @@ void gameplay2() {
 
   for (int i=0; i<enemys.size(); i++) {
     Enemy en = enemys.get(i);
-    //en.move(gravForce);
     en.update();
     en.fall();
   }
