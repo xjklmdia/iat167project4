@@ -70,7 +70,7 @@ class Character {
         levelend = true;
         gameState=2;
       } else {
-        gameState =3;
+        gameState =-1;
       }
     }
     

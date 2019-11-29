@@ -92,6 +92,9 @@ void draw() {
   reset();
   levelreset();
   switch (gameState) {
+  case -1:
+    startScreen("Wecome to Worse gaem");
+    
   case 0:
     levelone();
     gameplay();
@@ -189,6 +192,10 @@ void gameplay() {
       if (enemys.size()<12)respawnEnemy();
     }
   }
+  
+//for(int i = 0;i<blocks.size();i++){
+//blocks.get(i).drawMe2(en);}
+
 }
 
 ////////////////////////////////////// VOID GAME PLAY LEVEL 2 ////////////////////////////////////////////////////////////////////////
@@ -282,6 +289,13 @@ void leveltwo() {
   blocks2.add(new Block(new PVector(width/2+500, height - 240), new PVector(200, 40)));
   blocks2.add(new Block(new PVector(width/2+800, height - 120), new PVector(200, 40)));
   blocks2.add(new Block(new PVector(width+width/2-2, height - 20), new PVector(width, 40)));
+}
+
+void startScreen(String str){
+  controlp5.getController("Start Game").show();
+  background(255, 0, 0);
+  fill(255);
+  text(str, width/2-120, height/2);
 }
 
 void reset() {

@@ -54,4 +54,5 @@ class Block {
     rect(-dim.x/2, -dim.y/2, dim.x, dim.y);
     popMatrix();
   }
+  
 }
