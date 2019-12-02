@@ -15,7 +15,7 @@ class Character {
   Block block = null;
 
   //healthbaru
-  float maxHealth=10;
+  public float maxHealth=10;
   float health = maxHealth;
   float healthPercentage =10;
 
@@ -27,16 +27,16 @@ class Character {
     frames = standing;
     PImage sheet = loadImage("Running-mario.gif");
     for (int i = 0; i < walking.length; i++) {
-   
+
       PImage tile = createImage(tileWidth, tileHeight, ARGB);
       tile.copy(sheet, i*tileWidth, 0, tileWidth, tileHeight, 0, 0, tileWidth, tileHeight);
-      
+
       walking[i] = tile;
     }
     standing[0] = walking[0];
-    
+
     vel = new PVector(); //must create instance
-    dim = new PVector(32, 48);    
+    dim = new PVector(32, 48);
   }
 
   boolean levelend = false;
@@ -69,18 +69,22 @@ class Character {
         pos.x =0; 
         levelend = true;
         gameState=2;
+      } else if (gameState==2) {
+        pos.x= 0;
+        levelend = true;
+        gameState =3;
       } else {
-        gameState =-1;
+        gameState = 3;
       }
     }
-    
-       //framecontrol
+
+    //framecontrol
     if (frameCount % 6 == 0) {
       currentFrame++;
       println(currentFrame);
       //{    if (currentFrame == walking.length) {
       //currentFrame =0;}
-//    //if (pos.x+walking[currentFrame].width<0)
+      //if (pos.x+walking[currentFrame].width<0)
       //pos.x = width+walking [currentFrame].width;
       switch (state) {
         //walking
@@ -125,7 +129,7 @@ class Character {
     health --;
     println("dying a horrible death");
     if (health == 0) { 
-      gameState =2;
+      gameState =3;
     }
   }
 
